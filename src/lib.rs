@@ -5,7 +5,7 @@
 // This file may not be copied, modified, or distributed
 // except according to those terms.
 
-mod env {
+pub mod env {
   use std::env;
 
   /// The `get_vars` function returns all variables from environement.

@@ -8,16 +8,14 @@
 extern crate envlib;
 
 fn main() {
-  let files = vec!["./data/example.macro".to_string()];
   let mut line:String = String::new();
-
   loop {
     match std::io::stdin().read_line(&mut line) {
       Ok(_) => {
         let arg:String = line.chars().take_while(|x|
           *x != '\n'
         ).collect();
-        let result = envlib::interpreter(&arg);
+        let result = envlib::env::interpreter(&arg);
 
         println!("{:?}", result);
       },
