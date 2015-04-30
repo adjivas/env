@@ -15,9 +15,9 @@ fn main() {
         let arg:String = line.chars().take_while(|x|
           *x != '\n'
         ).collect();
-        let result = envlib::env::interpreter(&arg);
+        let result:String = envlib::env::interpreter(&arg);
 
-        println!("{:?}", result);
+        println!("{}", result);
       },
       Err(_) => break ,
     }

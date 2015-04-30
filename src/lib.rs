@@ -51,24 +51,22 @@ pub mod env {
     val
   }
 
-  /// The `replace` function replaces all key's env word
-  /// by value's env word.
+  /// The `replace` function returns a new line replaced by
+  /// all value from key's environement.
   pub fn replace (
     line: &String,
   ) -> String {
-    let keys = line.split(" ");
-    let mut vals: String = String::new();
+    let mut result:String = line.clone();
 
-    for key in keys {
-      if !key.is_empty() {
-        match env::var(&key) {
-          Ok(val) => vals.push_str(&val),
-          Err(_) => vals.push_str(key),
-        };
-        vals.push_str(" ");
+    for env in env::vars() {
+      let (key, val) = env;
+
+      match line.contains(&key) {
+        true => result = line.replace(&key, &val),
+        false => continue ,
       }
     }
-    vals
+    result
   }
 
   /// The `interpreter` function chooses the action.
