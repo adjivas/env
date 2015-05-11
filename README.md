@@ -2,6 +2,7 @@ Environement
 ============
 
 [![Build Status](https://travis-ci.org/adjivas/env.svg)](https://travis-ci.org/adjivas/env)
+[![GPLv3 License](http://img.shields.io/badge/license-GPLv3-blue.svg)](https://www.gnu.org/copyleft/gpl.html)
 
 This librairy is a systen's project for adds, sets or deletes variable's environement -env-.
 
