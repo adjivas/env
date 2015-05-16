@@ -79,7 +79,6 @@ pub mod env {
         false => continue ,
       }
     }
-    replace.push_str("\n");
     replace
   }
 
