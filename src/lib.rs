@@ -28,9 +28,15 @@ pub mod env {
   fn get_var (
     key: String,
   ) -> String {
+    let mut var:String = String::new();
+
     match env::var(&key) {
-      Ok(val) => val,
-      Err(_) => "".to_string(),
+      Ok(val) => {
+        var.push_str(&val);
+        var.push_str("\n");
+        var
+      },
+      Err(_) => "\n".to_string(),
     }
   }
 
@@ -38,8 +44,11 @@ pub mod env {
   fn del_var (
     key: String,
   ) -> String  {
+    let mut var:String = String::new();
+
     env::remove_var(&key);
-    key
+    var.push_str("\n");
+    var
   }
 
   /// The `set_var` function writes the variable according to key.
@@ -47,8 +56,12 @@ pub mod env {
     key: String,
     val: String,
   ) -> String {
+    let mut var:String = String::new();
+
     env::set_var(&key, &val);
-    val
+    var.push_str(&val);
+    var.push_str("\n");
+    var
   }
 
   /// The `replace` function returns a new line replaced by
@@ -56,17 +69,18 @@ pub mod env {
   pub fn replace (
     line: &String,
   ) -> String {
-    let mut result:String = line.clone();
+    let mut replace:String = line.clone();
 
     for env in env::vars() {
       let (key, val) = env;
 
       match line.contains(&key) {
-        true => result = line.replace(&key, &val),
+        true => replace = line.replace(&key, &val),
         false => continue ,
       }
     }
-    result
+    replace.push_str("\n");
+    replace
   }
 
   /// The `interpreter` function chooses the action.

@@ -10,14 +10,19 @@ extern crate envlib;
 fn main() {
   let mut line:String = String::new();
   loop {
-    match std::io::stdin().read_line(&mut line) {
+    match std::io::stdin().read_line(
+      &mut line
+    ) {
       Ok(_) => {
-        let arg:String = line.chars().take_while(|x|
-          *x != '\n'
-        ).collect();
-        let result:String = envlib::env::interpreter(&arg);
-
-        println!("{}", result);
+        match std::io::Write::write(
+          &mut std::io::stderr(),
+          &envlib::env::interpreter(&line.chars().take_while(|x|
+            *x != '\n'
+          ).collect()).into_bytes()
+        ) {
+          Ok(_) => line.clear(),
+          Err(why) => panic!("Unable to write to stderr: {}", why),
+        }
       },
       Err(_) => break ,
     }
