@@ -6,6 +6,10 @@
 // except according to those terms.
 
 pub mod env {
+  const BAD_INSTRUCTION: &'static str = "env interpreter fail";
+  const EQUAL: &'static str = " -> ";
+  const BREAK_LINE: &'static str = "\n";
+
   use std::env;
 
   /// The `get_vars` function returns all variables from environement.
@@ -17,9 +21,9 @@ pub mod env {
       let (key, val) = env;
 
       envs.push_str(&key);
-      envs.push_str(" -> ");
+      envs.push_str(EQUAL);
       envs.push_str(&val);
-      envs.push_str("\n");
+      envs.push_str(BREAK_LINE);
     }
     envs
   }
@@ -33,10 +37,10 @@ pub mod env {
     match env::var(&key) {
       Ok(val) => {
         var.push_str(&val);
-        var.push_str("\n");
+        var.push_str(BREAK_LINE);
         var
       },
-      Err(_) => "\n".to_string(),
+      Err(_) => BREAK_LINE.to_string(),
     }
   }
 
@@ -47,7 +51,7 @@ pub mod env {
     let mut var:String = String::new();
 
     env::remove_var(&key);
-    var.push_str("\n");
+    var.push_str(BREAK_LINE);
     var
   }
 
@@ -60,7 +64,7 @@ pub mod env {
 
     env::set_var(&key, &val);
     var.push_str(&val);
-    var.push_str("\n");
+    var.push_str(BREAK_LINE);
     var
   }
 
@@ -86,7 +90,7 @@ pub mod env {
   pub fn interpreter (
     line: &String,
   ) -> String {
-    let mut args = line.split(" -> ");
+    let mut args = line.split(EQUAL);
 
     match args.next() {
       Some(key) => {
@@ -101,7 +105,7 @@ pub mod env {
           },
         }
       },
-      None => panic!("env interpreter fail"),
+      None => panic!(BAD_INSTRUCTION),
     }
   }
 }
